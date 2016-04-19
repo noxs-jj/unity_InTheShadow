@@ -17,7 +17,7 @@ public class moveMouse : MonoBehaviour {
 	public GameObject	itemObject;
 
 	void Start () {
-		this.itemObject = GameObject.Find ("logo-4");
+		this.itemObject = load_item_with_scene();
 	}
 	
 	void Update () {
@@ -72,5 +72,14 @@ public class moveMouse : MonoBehaviour {
 	private void do_HORI_translate(int direction) {
 		float translate = (direction == (int)Dir.TRANSLEFT) ? -20.0f : 20.0f;
 		this.itemObject.transform.position += new Vector3 (translate, 0.0f, 0.0f) * Time.deltaTime;
+	}
+
+	private GameObject load_item_with_scene(){
+		if (Application.loadedLevelName == "scene_item_teaPot"){
+			return GameObject.Find ("tea_pot_tomove");
+		} else if (Application.loadedLevelName == "scene_item4"){
+			return GameObject.Find ("item_4");
+		}
+		return null;
 	}
 }

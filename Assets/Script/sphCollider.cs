@@ -11,13 +11,19 @@ public class sphCollider : MonoBehaviour {
 	void Start () {
 		this.idCurrent = idSphere;
 		idSphere++;
-		this.managerObject = GameObject.Find ("game_manager_object ");
+		this.managerObject = GameObject.Find ("game_manager_object");
 		this.managerScript = this.managerObject.GetComponent<gameManager> ();
 	}
 
 	public int get_idCurrent(){ return this.idCurrent; }
 
-	void OnTriggerEnter(Collider obj){ this.managerScript.setActive (this.idCurrent); }
+	void OnTriggerEnter(Collider obj){
+		this.managerScript.setActive (this.idCurrent);
+		//Debug.Log("OnTriggerEnter setActive ID= " + this.idCurrent.ToString());
+	}
 
-	void OnTriggerExit(Collider obj){ this.managerScript.setInactive (this.idCurrent); }
+	void OnTriggerExit(Collider obj){
+		this.managerScript.setInactive (this.idCurrent);
+		//Debug.Log("OnTriggerExit setInactive ID= " + this.idCurrent.ToString());
+	}
 }
