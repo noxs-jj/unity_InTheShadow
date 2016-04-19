@@ -37,11 +37,11 @@ public class moveMouse : MonoBehaviour {
 					do_VERT_translate((int)Dir.TRANSUP);
 				} else if (Input.GetAxis("Mouse Y") > 0){
 					do_VERT_translate((int)Dir.TRANSDOWN);
-				} else if (Input.GetAxis("Mouse X") < 0){
+				}/* else if (Input.GetAxis("Mouse X") < 0){
 					do_HORI_translate((int)Dir.TRANSLEFT);
 				} else if (Input.GetAxis("Mouse X") > 0){
 					do_HORI_translate((int)Dir.TRANSRIGHT);
-				}
+				}*/	
 			} else { // ROTATE HONRIZONTAL
 				if (Input.GetAxis("Mouse X") < 0){
 					do_X_rotate((int)Dir.ROTATELEFT);
