@@ -13,75 +13,108 @@ enum Dir : int {
 }
 
 public class moveMouse : MonoBehaviour {
+	public GameObject[]	itemObject;
 
-	public GameObject	itemObject;
+	private int 		objectNbr = 0;
 
 	void Start () {
 		this.itemObject = load_item_with_scene();
+		this.objectNbr = get_numberObject ();
+
 	}
 	
 	void Update () {
-		mouseEvent ();
+		if (1 == this.objectNbr) {
+			mouseEvent (this.itemObject[0]);
+		} else if (2 == this.objectNbr) {
+			mouseEvent (findObjectGrabbed());
+		}
 	}
 
-	private void mouseEvent(){
+	private GameObject findObjectGrabbed () {
+		return null;
+	}
+
+	private void mouseEvent(GameObject toApply) {
 		if (Input.GetMouseButton (0)) {
 			if ((Input.GetKey (KeyCode.LeftControl) || Input.GetKey (KeyCode.RightControl))) { // ROTATE VERTICAL
 				if (Input.GetAxis("Mouse Y") > 0){
-					do_Y_rotate((int)Dir.ROTATEUP);
+					do_Y_rotate(toApply, (int)Dir.ROTATEUP);
 				} else if (Input.GetAxis("Mouse Y") < 0){
-					do_Y_rotate((int)Dir.ROTATEDOWN);
+					do_Y_rotate(toApply, (int)Dir.ROTATEDOWN);
 				}
 			} else if ((Input.GetKey (KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))) { // TRANSLATE VERTICAL
 				if (Input.GetAxis("Mouse Y") < 0){
-					do_VERT_translate((int)Dir.TRANSUP);
+					do_VERT_translate(toApply, (int)Dir.TRANSUP);
 				} else if (Input.GetAxis("Mouse Y") > 0){
-					do_VERT_translate((int)Dir.TRANSDOWN);
+					do_VERT_translate(toApply, (int)Dir.TRANSDOWN);
 				}/* else if (Input.GetAxis("Mouse X") < 0){
-					do_HORI_translate((int)Dir.TRANSLEFT);
+					do_HORI_translate(toApply, (int)Dir.TRANSLEFT);
 				} else if (Input.GetAxis("Mouse X") > 0){
-					do_HORI_translate((int)Dir.TRANSRIGHT);
+					do_HORI_translate(toApply, (int)Dir.TRANSRIGHT);
 				}*/	
 			} else { // ROTATE HONRIZONTAL
 				if (Input.GetAxis("Mouse X") < 0){
-					do_X_rotate((int)Dir.ROTATELEFT);
+					do_X_rotate(toApply, (int)Dir.ROTATELEFT);
 				} else if (Input.GetAxis("Mouse X") > 0){
-					do_X_rotate((int)Dir.ROTATERIGHT);
+					do_X_rotate(toApply, (int)Dir.ROTATERIGHT);
 				}
 			}
 		}
 	}
 
-	private void do_X_rotate(int direction){
+	private void do_X_rotate(GameObject toApply, int direction) {
 		float rotate = (direction == (int)Dir.ROTATELEFT) ? 40.0f : -40.0f;
-		this.itemObject.transform.Rotate( new Vector3( 0.0f, rotate, 0.0f) * Time.deltaTime, Space.World );
+		toApply.transform.Rotate( new Vector3( 0.0f, rotate, 0.0f) * Time.deltaTime, Space.World );
 
 	}
 
-	private void do_Y_rotate(int direction){
+	private void do_Y_rotate(GameObject toApply, int direction) {
 		float rotate = (direction == (int)Dir.ROTATEUP) ? 40.0f : -40.0f;
-		this.itemObject.transform.Rotate( new Vector3( rotate, 0.0f, 0.0f) * Time.deltaTime, Space.World );
+		toApply.transform.Rotate( new Vector3( rotate, 0.0f, 0.0f) * Time.deltaTime, Space.World );
 		
 	}
 
-	private void do_VERT_translate(int direction) {
+	private void do_VERT_translate(GameObject toApply, int direction) {
 		float translate = (direction == (int)Dir.TRANSUP) ? -20.0f : 20.0f;
-		this.itemObject.transform.position += new Vector3 (0.0f, translate, 0.0f) * Time.deltaTime;
+		toApply.transform.position += new Vector3 (0.0f, translate, 0.0f) * Time.deltaTime;
 	}
 
-	private void do_HORI_translate(int direction) {
+	private void do_HORI_translate(GameObject toApply, int direction) {
 		float translate = (direction == (int)Dir.TRANSLEFT) ? -20.0f : 20.0f;
-		this.itemObject.transform.position += new Vector3 (translate, 0.0f, 0.0f) * Time.deltaTime;
+		toApply.transform.position += new Vector3 (translate, 0.0f, 0.0f) * Time.deltaTime;
 	}
 
-	private GameObject load_item_with_scene(){
+	private GameObject[] load_item_with_scene() {
+		GameObject[] tabObject = new GameObject[2];
+	
+		if (null == tabObject)
+			return null;
 		if (Application.loadedLevelName == "scene_item_teaPot"){
-			return GameObject.Find ("tea_pot_tomove");
+			tabObject[1] = GameObject.Find ("tea_pot_tomove");
+			tabObject[1] = null;
 		} else if (Application.loadedLevelName == "scene_item4"){
-			return GameObject.Find ("item_4");
+			tabObject[1] = GameObject.Find ("item_4");
+			tabObject[1] = null;
 		} else if (Application.loadedLevelName == "scene_elephant"){
-			return GameObject.Find ("elephant");
+			tabObject[1] = GameObject.Find ("elephant");
+			tabObject[1] = null;
+		} else if (Application.loadedLevelName == "scene_globe"){
+			tabObject[1] = GameObject.Find ("globe_base");
+			tabObject[1] = GameObject.Find ("globe-earth");
 		}
-		return null;
+		return tabObject;
+	}
+
+	private int get_numberObject() {
+		if (Application.loadedLevelName == "scene_item_teaPot"
+			|| Application.loadedLevelName == "scene_item4"
+			|| Application.loadedLevelName == "scene_elephant") {
+			return 1;
+		} else if (Application.loadedLevelName == "scene_globe") {
+			return 2;
+		} else {
+			return -1;
+		}
 	}
 }
