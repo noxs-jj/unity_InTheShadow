@@ -54,13 +54,13 @@ public class moveMouse : MonoBehaviour {
 
 	private void do_X_rotate(int direction){
 		float rotate = (direction == (int)Dir.ROTATELEFT) ? 40.0f : -40.0f;
-		this.itemObject.transform.Rotate( new Vector3( 0.0f, rotate, 0.0f) * Time.deltaTime );
+		this.itemObject.transform.Rotate( new Vector3( 0.0f, rotate, 0.0f) * Time.deltaTime, Space.World );
 
 	}
 
 	private void do_Y_rotate(int direction){
 		float rotate = (direction == (int)Dir.ROTATEUP) ? 40.0f : -40.0f;
-		this.itemObject.transform.Rotate( new Vector3( rotate, 0.0f, 0.0f) * Time.deltaTime );
+		this.itemObject.transform.Rotate( new Vector3( rotate, 0.0f, 0.0f) * Time.deltaTime, Space.World );
 		
 	}
 

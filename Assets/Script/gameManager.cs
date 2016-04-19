@@ -27,9 +27,7 @@ public class gameManager : MonoBehaviour {
 	void Update () {
 		keyboard_event ();
 		if (true == check_collider_win ()) {
-			Debug.Log("WIN");
-		} else {
-			Debug.Log("try");
+			Debug.Log("WIN WIN WIN");
 		}
 	}
 	
