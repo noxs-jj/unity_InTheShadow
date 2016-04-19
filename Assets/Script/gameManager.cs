@@ -7,22 +7,30 @@ public class gameManager : MonoBehaviour {
 	private bool[]			tabIsActive;
 	
 	void Start () {
-		int i = 0;
-		
 		this.tabColliderObject = GameObject.FindGameObjectsWithTag ("sphere_collider");
-		this.tabColliderScript = new sphCollider[this.tabColliderObject.Length];
+
+		int i = 0;
+		int tabLen = this.tabColliderObject.Length;
+
+		Debug.Log("this.tabColliderObject.Length " + tabLen.ToString());
+		this.tabColliderScript = new sphCollider[tabLen];
 		foreach (GameObject sphereObject in this.tabColliderObject) {
-			this.tabColliderScript[i] = this.tabColliderObject[i].GetComponent<sphCollider>();
+			this.tabColliderScript[i] = sphereObject.GetComponent<sphCollider>();
 		}
-		this.tabIsActive = new bool[this.tabColliderObject.Length];
-		foreach (bool isActive in this.tabIsActive) {
-			isActive = false;
+		this.tabIsActive = new bool[tabLen];
+		while (i < tabLen) {
+			this.tabIsActive[i] = false;
+			i++;
 		}
 	}
 	
 	void Update () {
 		keyboard_event ();
-		check_collider_win ();
+		if (true == check_collider_win ()) {
+			Debug.Log("WIN");
+		} else {
+			Debug.Log("try");
+		}
 	}
 	
 	public void	setActive(int id){
