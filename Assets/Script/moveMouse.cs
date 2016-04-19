@@ -37,12 +37,16 @@ public class moveMouse : MonoBehaviour {
 					do_VERT_translate((int)Dir.TRANSUP);
 				} else if (Input.GetAxis("Mouse Y") > 0){
 					do_VERT_translate((int)Dir.TRANSDOWN);
+				} else if (Input.GetAxis("Mouse X") < 0){
+					do_HORI_translate((int)Dir.TRANSLEFT);
+				} else if (Input.GetAxis("Mouse X") > 0){
+					do_HORI_translate((int)Dir.TRANSRIGHT);
 				}
 			} else { // ROTATE HONRIZONTAL
 				if (Input.GetAxis("Mouse X") < 0){
 					do_X_rotate((int)Dir.ROTATELEFT);
 				} else if (Input.GetAxis("Mouse X") > 0){
-					Debug.Log("MOUSE AXE RIGHT");
+					do_X_rotate((int)Dir.ROTATERIGHT);
 				}
 			}
 		}
@@ -63,5 +67,10 @@ public class moveMouse : MonoBehaviour {
 	private void do_VERT_translate(int direction) {
 		float translate = (direction == (int)Dir.TRANSUP) ? -20.0f : 20.0f;
 		this.itemObject.transform.position += new Vector3 (0.0f, translate, 0.0f) * Time.deltaTime;
+	}
+
+	private void do_HORI_translate(int direction) {
+		float translate = (direction == (int)Dir.TRANSLEFT) ? -20.0f : 20.0f;
+		this.itemObject.transform.position += new Vector3 (translate, 0.0f, 0.0f) * Time.deltaTime;
 	}
 }
