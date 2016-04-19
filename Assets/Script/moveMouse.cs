@@ -79,6 +79,8 @@ public class moveMouse : MonoBehaviour {
 			return GameObject.Find ("tea_pot_tomove");
 		} else if (Application.loadedLevelName == "scene_item4"){
 			return GameObject.Find ("item_4");
+		} else if (Application.loadedLevelName == "scene_elephant"){
+			return GameObject.Find ("elephant");
 		}
 		return null;
 	}
