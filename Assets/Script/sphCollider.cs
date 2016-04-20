@@ -2,11 +2,18 @@
 using System.Collections;
 
 public class sphCollider : MonoBehaviour {
+
+	public static sphCollider instance { get; private set; }
+
 	public static int	idSphere = 0;
 
 	private GameObject	managerObject;
 	private gameManager managerScript;
 	private int			idCurrent;
+
+	void Awake(){
+		instance = this;
+	}
 
 	void Start () {
 		this.idCurrent = idSphere;
@@ -15,7 +22,8 @@ public class sphCollider : MonoBehaviour {
 		this.managerScript = this.managerObject.GetComponent<gameManager> ();
 	}
 
-	public int get_idCurrent(){ return this.idCurrent; }
+	public int get_idCurrent() { return this.idCurrent; }
+	public void reset_static_id() { idSphere = 0; }
 
 	void OnTriggerEnter(Collider obj){
 		this.managerScript.setActive (this.idCurrent);
