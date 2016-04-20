@@ -35,6 +35,23 @@ public class moveMouse : MonoBehaviour {
 		}
 	}
 
+	private void randomizeItem(){
+		if (Application.loadedLevelName == "scene_item_teaPot"){
+			this.itemObject[0].transform.Rotate( new Vector3( 0.0f, rotate, 0.0f) * Time.deltaTime, Space.World );
+			
+		} else if (Application.loadedLevelName == "scene_elephant"){
+			//this.itemObject[0].transform.Rotate( new Vector3( 0.0f, rotate, 0.0f) * Time.deltaTime, Space.World );
+			
+		} else if (Application.loadedLevelName == "scene_globe"){
+			//this.itemObject[0].transform.Rotate( new Vector3( 0.0f, rotate, 0.0f) * Time.deltaTime, Space.World );
+			//this.itemObject[2].transform.Rotate( new Vector3( 0.0f, rotate, 0.0f) * Time.deltaTime, Space.World );
+			
+		} else if (Application.loadedLevelName == "scene_bonus"){
+			//this.itemObject[0].transform.Rotate( new Vector3( 0.0f, rotate, 0.0f) * Time.deltaTime, Space.World );
+			
+		}
+	}
+
 	private void findObjectGrabbed () {
 		Ray 		ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 		RaycastHit 	hit;

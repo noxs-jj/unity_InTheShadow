@@ -27,7 +27,7 @@ public class gameManager : MonoBehaviour {
 	
 	void Update () {
 		keyboard_event ();
-		if (true == check_collider_win ()) {
+		if (true == check_collider_win() && Application.loadedLevelName != "intro_start") {
 			Debug.Log("WIN WIN WIN");
 		}
 	}
@@ -65,6 +65,20 @@ public class gameManager : MonoBehaviour {
 	private void debug_printSphereTabId() {
 		foreach(sphCollider scriptObj in this.tabColliderScript) {
 			Debug.Log("sphereID = " + scriptObj.get_idCurrent());
+		}
+	}
+	
+	private void loadNextLevel(){
+		if (Application.loadedLevelName == "intro_start"){
+			Application.LoadLevel ("scene_item_teaPot");
+		} else if (Application.loadedLevelName == "scene_item_teaPot"){
+			Application.LoadLevel ("scene_elephant");
+		} else if (Application.loadedLevelName == "scene_elephant"){
+			Application.LoadLevel ("scene_globe");
+		} else if (Application.loadedLevelName == "scene_globe"){
+			Application.LoadLevel ("scene_bonus");
+		} else if (Application.loadedLevelName == "scene_bonus"){
+			Application.LoadLevel ("intro_start");
 		}
 	}
 }
