@@ -91,16 +91,16 @@ public class moveMouse : MonoBehaviour {
 		if (null == tabObject)
 			return null;
 		if (Application.loadedLevelName == "scene_item_teaPot"){
-			tabObject[1] = GameObject.Find ("tea_pot_tomove");
+			tabObject[0] = GameObject.Find ("tea_pot_tomove");
 			tabObject[1] = null;
 		} else if (Application.loadedLevelName == "scene_item4"){
-			tabObject[1] = GameObject.Find ("item_4");
+			tabObject[0] = GameObject.Find ("item_4");
 			tabObject[1] = null;
 		} else if (Application.loadedLevelName == "scene_elephant"){
-			tabObject[1] = GameObject.Find ("elephant");
+			tabObject[0] = GameObject.Find ("elephant");
 			tabObject[1] = null;
 		} else if (Application.loadedLevelName == "scene_globe"){
-			tabObject[1] = GameObject.Find ("globe_base");
+			tabObject[0] = GameObject.Find ("globe_base");
 			tabObject[1] = GameObject.Find ("globe-earth");
 		}
 		return tabObject;
