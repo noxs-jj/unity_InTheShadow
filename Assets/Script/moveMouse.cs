@@ -15,24 +15,39 @@ enum Dir : int {
 public class moveMouse : MonoBehaviour {
 	public GameObject[]	itemObject;
 
-	private int 		objectNbr = 0;
+	private int 				objectNbr = 0;
+	private static GameObject	lastSelectObject = null;
 
 	void Start () {
 		this.itemObject = load_item_with_scene();
 		this.objectNbr = get_numberObject ();
-
+		lastSelectObject = this.itemObject[0];
 	}
 	
 	void Update () {
+		if (Input.GetMouseButtonDown (0)) {
+			findObjectGrabbed ();
+		}
 		if (1 == this.objectNbr) {
 			mouseEvent (this.itemObject[0]);
 		} else if (2 == this.objectNbr) {
-			mouseEvent (findObjectGrabbed());
+			mouseEvent (lastSelectObject);
 		}
 	}
 
-	private GameObject findObjectGrabbed () {
-		return null;
+	private void findObjectGrabbed () {
+		Ray 		ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+		RaycastHit 	hit;
+
+		if (Physics.Raycast(ray, out hit, 1000)){
+			if (hit.collider.tag == "obj0") {
+				Debug.Log("clic on obj0");
+				lastSelectObject = this.itemObject[0];
+			} else if (hit.collider.tag == "obj1") {
+				Debug.Log("clic on obj1");
+				lastSelectObject = this.itemObject[1];
+			}
+		}
 	}
 
 	private void mouseEvent(GameObject toApply) {
@@ -76,7 +91,7 @@ public class moveMouse : MonoBehaviour {
 	}
 
 	private void do_VERT_translate(GameObject toApply, int direction) {
-		float translate = (direction == (int)Dir.TRANSUP) ? -20.0f : 20.0f;
+		float translate = (direction == (int)Dir.TRANSUP) ? -2.0f : 2.0f;
 		toApply.transform.position += new Vector3 (0.0f, translate, 0.0f) * Time.deltaTime;
 	}
 

@@ -16,6 +16,7 @@ public class gameManager : MonoBehaviour {
 		this.tabColliderScript = new sphCollider[tabLen];
 		foreach (GameObject sphereObject in this.tabColliderObject) {
 			this.tabColliderScript[i] = sphereObject.GetComponent<sphCollider>();
+			Debug.Log(this.tabColliderScript[i].get_idCurrent());
 		}
 		this.tabIsActive = new bool[tabLen];
 		while (i < tabLen) {
@@ -33,10 +34,12 @@ public class gameManager : MonoBehaviour {
 	
 	public void	setActive(int id){
 		this.tabIsActive [id] = true;
+		//Debug.Log("setActive id: " + id.ToString());
 	}
 	
 	public void	setInactive(int id) {
 		this.tabIsActive [id] = false;
+		//Debug.Log("setInactive id: " + id.ToString());
 	}
 
 	private bool check_collider_win(){
