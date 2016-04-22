@@ -46,14 +46,8 @@ public class uiManager : MonoBehaviour {
 		drawPause ();
 	}
 	
-	public void activateTestPanelSelect(){
-		sphCollider.instance.reset_static_id();
-		this.panelLevelSelectObject.SetActive (true);
-	}
-	public void desactivateTestPanelSelect(){
-		sphCollider.instance.reset_static_id();
-		this.panelLevelSelectObject.SetActive (false);
-	}
+	public void activateTestPanelSelect(){			this.panelLevelSelectObject.SetActive (true); }
+	public void desactivateTestPanelSelect(){		this.panelLevelSelectObject.SetActive (false); }
 	public void activateClassicPanelSelect(){ 		this.panelLevelSelectObject.SetActive (true); }
 	public void desactivateClassicPanelSelect(){ 	this.panelLevelSelectObject.SetActive (false); }
 

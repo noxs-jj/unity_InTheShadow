@@ -65,7 +65,7 @@ public class gameManager : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.S)) {
 			debug_printSphereTabId();
 		}
-		if (Input.GetKeyDown (KeyCode.Escape)) {
+		if (Input.GetKeyDown (KeyCode.Q)) {
 			Application.Quit();
 		}
 	}
