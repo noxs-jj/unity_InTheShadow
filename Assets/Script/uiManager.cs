@@ -3,16 +3,15 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class uiManager : MonoBehaviour {
-	private GameObject	buttonClassicModeObject;
-	private GameObject	buttonTestModeObject;
-	private GameObject	buttonBackIntroObject;
-	private GameObject	menuInterfaceEscapeObject;
-	private GameObject	panelLevelSelectObject;
-	private GameObject	maskTeaPotObject;
-	private GameObject	maskElephantObject;
-	private GameObject	maskGlobeObject;
-	private GameObject	maskTBonusObject;
-	private bool		isMenuDraw = true;
+	private GameObject		buttonClassicModeObject;
+	private GameObject		buttonTestModeObject;
+	private GameObject		buttonBackIntroObject;
+	private GameObject		menuInterfaceEscapeObject;
+	private GameObject		panelLevelSelectObject;
+	private GameObject[]	tabSphereObjects;
+	private GameObject[]	tabBarObjects;
+	private bool			isMenuDraw;
+	private bool			isSoluceDraw = false;
 	
 	void Start () {
 		this.buttonClassicModeObject = GameObject.Find ("button_classic_mode");
@@ -20,12 +19,18 @@ public class uiManager : MonoBehaviour {
 		this.buttonBackIntroObject = GameObject.Find ("button_back_to_intro");
 		this.menuInterfaceEscapeObject = GameObject.Find ("menuInterface_escape");
 		this.panelLevelSelectObject = GameObject.Find ("panel_level_select");
-		this.maskTeaPotObject = GameObject.Find ("mask_image_teaPot");
-		this.maskElephantObject = GameObject.Find ("mask_image_elephant");
-		this.maskGlobeObject = GameObject.Find ("mask_image_globe");
-		this.maskTBonusObject = GameObject.Find ("mask_image_bonus");
+		this.tabBarObjects = GameObject.FindGameObjectsWithTag ("barre_impact_collider");
+		this.tabSphereObjects = GameObject.FindGameObjectsWithTag ("sphere_collider");
 		this.panelLevelSelectObject.SetActive (false);
 		this.menuInterfaceEscapeObject.SetActive (true);
+		soluce_draw();
+		if (Application.loadedLevelName == "intro_start") {
+			this.isMenuDraw = true;
+			this.menuInterfaceEscapeObject.SetActive(true);
+		} else {
+			this.isMenuDraw = false;
+			this.menuInterfaceEscapeObject.SetActive(this.isMenuDraw);
+		}
 	}
 	
 	void Update () {
@@ -45,8 +50,35 @@ public class uiManager : MonoBehaviour {
 	
 	private void keyboard_event(){
 		if (Input.GetKeyDown (KeyCode.Escape)) {
-			this.isMenuDraw = (this.isMenuDraw == true) ? false : true;
-			this.menuInterfaceEscapeObject.SetActive(this.isMenuDraw);
+			if (Application.loadedLevelName == "intro_start") {
+				this.menuInterfaceEscapeObject.SetActive(true);
+				this.isMenuDraw = true;
+			} else {
+				this.isMenuDraw = (this.isMenuDraw == true) ? false : true;
+				this.menuInterfaceEscapeObject.SetActive(this.isMenuDraw);
+			}
+		}
+		if (Input.GetKeyDown (KeyCode.R)) {
+			this.isSoluceDraw = (this.isSoluceDraw == true) ? false : true;
+			soluce_draw();
+		}
+	}
+
+	private void soluce_draw(){
+		if (true == this.isSoluceDraw) {
+			foreach (GameObject obj in this.tabBarObjects) {
+				obj.GetComponent<MeshRenderer> ().enabled = true;
+			}
+			foreach (GameObject obj in this.tabSphereObjects) {
+				obj.GetComponent<MeshRenderer> ().enabled = true;
+			}
+		} else {
+			foreach (GameObject obj in this.tabBarObjects) {
+				obj.GetComponent<MeshRenderer> ().enabled = false;
+			}
+			foreach (GameObject obj in this.tabSphereObjects) {
+				obj.GetComponent<MeshRenderer> ().enabled = false;
+			}
 		}
 	}
 }

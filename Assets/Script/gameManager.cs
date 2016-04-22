@@ -12,11 +12,11 @@ public class gameManager : MonoBehaviour {
 		int i = 0;
 		int tabLen = this.tabColliderObject.Length;
 		
-		Debug.Log("this.tabColliderObject.Length " + tabLen.ToString());
+		//Debug.Log("this.tabColliderObject.Length " + tabLen.ToString());
 		this.tabColliderScript = new sphCollider[tabLen];
 		foreach (GameObject sphereObject in this.tabColliderObject) {
 			this.tabColliderScript[i] = sphereObject.GetComponent<sphCollider>();
-			Debug.Log(this.tabColliderScript[i].get_idCurrent());
+			//Debug.Log(this.tabColliderScript[i].get_idCurrent());
 		}
 		this.tabIsActive = new bool[tabLen];
 		while (i < tabLen) {
@@ -87,5 +87,4 @@ public class gameManager : MonoBehaviour {
 			Application.LoadLevel ("intro_start");
 		}
 	}
-	
 }

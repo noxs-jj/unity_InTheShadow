@@ -13,7 +13,7 @@ enum Dir : int {
 }
 
 public class moveMouse : MonoBehaviour {
-	public GameObject[]			itemObject;
+	public GameObject[]	itemObject;
 
 	private int 		objectNbr = 0;
 	private GameObject	lastSelectObject = null;
@@ -41,10 +41,10 @@ public class moveMouse : MonoBehaviour {
 
 		if (Physics.Raycast(ray, out hit, 1000)){
 			if (hit.collider.tag == "obj0") {
-				Debug.Log("clic on obj0");
+				//Debug.Log("clic on obj0");
 				lastSelectObject = this.itemObject[0];
 			} else if (hit.collider.tag == "obj1") {
-				Debug.Log("clic on obj1");
+				//Debug.Log("clic on obj1");
 				lastSelectObject = this.itemObject[1];
 			}
 		}
