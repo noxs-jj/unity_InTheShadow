@@ -5,12 +5,15 @@ public class gameManager : MonoBehaviour {
 	private GameObject[]	tabColliderObject;
 	private sphCollider[]	tabColliderScript;
 	private bool[]			tabIsActive;
+	private bool			isPausedEscape = false;
+	public bool				isWin = false;
 
 	void Start () {
 		this.tabColliderObject = GameObject.FindGameObjectsWithTag ("sphere_collider");
 		
 		int i = 0;
 		int tabLen = this.tabColliderObject.Length;
+		Time.timeScale = 1.0f;
 		
 		//Debug.Log("this.tabColliderObject.Length " + tabLen.ToString());
 		this.tabColliderScript = new sphCollider[tabLen];
@@ -23,13 +26,17 @@ public class gameManager : MonoBehaviour {
 			this.tabIsActive[i] = false;
 			i++;
 		}
+		Debug.Log ("Time.timeScale = " + Time.timeScale.ToString ());
 	}
 	
 	void Update () {
 		keyboard_event ();
 		if (true == check_collider_win() && Application.loadedLevelName != "intro_start") {
 			Debug.Log("WIN WIN WIN");
-			loadNextLevel();
+			Time.timeScale = 0.0f;
+			sphCollider.instance.reset_static_id();
+			this.isWin = true;
+			//loadNextLevel();
 		}
 	}
 

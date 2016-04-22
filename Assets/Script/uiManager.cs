@@ -8,8 +8,11 @@ public class uiManager : MonoBehaviour {
 	private GameObject		buttonBackIntroObject;
 	private GameObject		menuInterfaceEscapeObject;
 	private GameObject		panelLevelSelectObject;
+	private GameObject		winnerInterfaceObject;
 	private GameObject[]	tabSphereObjects;
 	private GameObject[]	tabBarObjects;
+	private GameObject		gameManagerObject;
+	private gameManager		gameManagerScript;
 	private bool			isMenuDraw;
 	private bool			isSoluceDraw = false;
 	
@@ -19,14 +22,19 @@ public class uiManager : MonoBehaviour {
 		this.buttonBackIntroObject = GameObject.Find ("button_back_to_intro");
 		this.menuInterfaceEscapeObject = GameObject.Find ("menuInterface_escape");
 		this.panelLevelSelectObject = GameObject.Find ("panel_level_select");
+		this.winnerInterfaceObject = GameObject.Find ("winnerInterface_group");
+		this.gameManagerObject = GameObject.Find ("game_manager_object");
+		this.gameManagerScript = this.gameManagerObject.GetComponent<gameManager> ();
 		this.tabBarObjects = GameObject.FindGameObjectsWithTag ("barre_impact_collider");
 		this.tabSphereObjects = GameObject.FindGameObjectsWithTag ("sphere_collider");
 		this.panelLevelSelectObject.SetActive (false);
 		this.menuInterfaceEscapeObject.SetActive (true);
+		this.winnerInterfaceObject.SetActive(false);
 		soluce_draw();
 		if (Application.loadedLevelName == "intro_start") {
 			this.isMenuDraw = true;
 			this.menuInterfaceEscapeObject.SetActive(true);
+
 		} else {
 			this.isMenuDraw = false;
 			this.menuInterfaceEscapeObject.SetActive(this.isMenuDraw);
@@ -35,23 +43,50 @@ public class uiManager : MonoBehaviour {
 	
 	void Update () {
 		keyboard_event ();
+		drawPause ();
 	}
 	
-	public void activateTestPanelSelect(){ this.panelLevelSelectObject.SetActive (true); }
-	public void desactivateTestPanelSelect(){ this.panelLevelSelectObject.SetActive (false); }
-	public void activateClassicPanelSelect(){ this.panelLevelSelectObject.SetActive (true); }
-	public void desactivateClassicPanelSelect(){ this.panelLevelSelectObject.SetActive (false); }
-	
-	public void launchLevelTeaPot(){ Application.LoadLevel ("scene_item_teaPot"); }
-	public void launchLevelElephant(){ Application.LoadLevel ("scene_elephant"); }
-	public void launchLevelGlobe(){ Application.LoadLevel ("scene_globe"); }
-	public void launchLevelBonus(){ Application.LoadLevel ("scene_bonus"); }
-	public void launchIntroStart(){ Application.LoadLevel ("intro_start"); }
+	public void activateTestPanelSelect(){ 			this.panelLevelSelectObject.SetActive (true); }
+	public void desactivateTestPanelSelect(){ 		this.panelLevelSelectObject.SetActive (false); }
+	public void activateClassicPanelSelect(){ 		this.panelLevelSelectObject.SetActive (true); }
+	public void desactivateClassicPanelSelect(){ 	this.panelLevelSelectObject.SetActive (false); }
 
-	public void clikButtonTest(){
-		Debug.Log ("Button CLICKED !");
+	public void launchLevelTeaPot(){ 	Application.LoadLevel ("scene_item_teaPot"); }
+	public void launchLevelElephant(){ 	Application.LoadLevel ("scene_elephant"); }
+	public void launchLevelGlobe(){ 	Application.LoadLevel ("scene_globe"); }
+	public void launchLevelBonus(){ 	Application.LoadLevel ("scene_bonus"); }
+	public void launchIntroStart(){ 	Application.LoadLevel ("intro_start"); }
+
+	public void retry(){
+		sphCollider.instance.reset_static_id();
+		Application.LoadLevel (Application.loadedLevelName);
 	}
-	
+
+	public void loadNextLevel(){
+		if (Application.loadedLevelName == "intro_start"){
+			sphCollider.instance.reset_static_id();
+			Application.LoadLevel ("scene_item_teaPot");
+		} else if (Application.loadedLevelName == "scene_item_teaPot"){
+			sphCollider.instance.reset_static_id();
+			Application.LoadLevel ("scene_elephant");
+		} else if (Application.loadedLevelName == "scene_elephant"){
+			sphCollider.instance.reset_static_id();
+			Application.LoadLevel ("scene_globe");
+		} else if (Application.loadedLevelName == "scene_globe"){
+			sphCollider.instance.reset_static_id();
+			Application.LoadLevel ("scene_bonus");
+		} else if (Application.loadedLevelName == "scene_bonus"){
+			sphCollider.instance.reset_static_id();
+			Application.LoadLevel ("intro_start");
+		}
+	}
+
+	private void drawPause(){
+		if (true == this.gameManagerScript.isWin) {
+			this.winnerInterfaceObject.SetActive(true);
+		}
+	}
+
 	private void keyboard_event(){
 		if (Input.GetKeyDown (KeyCode.Escape)) {
 			if (Application.loadedLevelName == "intro_start") {
@@ -60,6 +95,7 @@ public class uiManager : MonoBehaviour {
 			} else {
 				this.isMenuDraw = (this.isMenuDraw == true) ? false : true;
 				this.menuInterfaceEscapeObject.SetActive(this.isMenuDraw);
+				Time.timeScale = (this.isMenuDraw == true) ? 0.0f : 1.0f;
 			}
 		}
 		if (Input.GetKeyDown (KeyCode.R)) {
