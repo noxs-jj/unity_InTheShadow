@@ -25,13 +25,7 @@ public class sphCollider : MonoBehaviour {
 	public int get_idCurrent() { return this.idCurrent; }
 	public void reset_static_id() { idSphere = 0; }
 
-	void OnTriggerEnter(Collider obj){
-		this.managerScript.setActive (this.idCurrent);
-		//Debug.Log("OnTriggerEnter setActive ID= " + this.idCurrent.ToString());
-	}
+	void OnTriggerEnter(Collider obj){ this.managerScript.setActive (this.idCurrent); }
 
-	void OnTriggerExit(Collider obj){
-		this.managerScript.setInactive (this.idCurrent);
-		//Debug.Log("OnTriggerExit setInactive ID= " + this.idCurrent.ToString());
-	}
+	void OnTriggerExit(Collider obj){ this.managerScript.setInactive (this.idCurrent); }
 }

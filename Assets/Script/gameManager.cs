@@ -5,50 +5,37 @@ public class gameManager : MonoBehaviour {
 	private GameObject[]	tabColliderObject;
 	private sphCollider[]	tabColliderScript;
 	private bool[]			tabIsActive;
-	private bool			isPausedEscape = false;
 	public bool				isWin = false;
 
 	void Start () {
 		this.tabColliderObject = GameObject.FindGameObjectsWithTag ("sphere_collider");
-		
 		int i = 0;
 		int tabLen = this.tabColliderObject.Length;
 		Time.timeScale = 1.0f;
 		
-		//Debug.Log("this.tabColliderObject.Length " + tabLen.ToString());
 		this.tabColliderScript = new sphCollider[tabLen];
 		foreach (GameObject sphereObject in this.tabColliderObject) {
 			this.tabColliderScript[i] = sphereObject.GetComponent<sphCollider>();
-			//Debug.Log(this.tabColliderScript[i].get_idCurrent());
 		}
 		this.tabIsActive = new bool[tabLen];
 		while (i < tabLen) {
 			this.tabIsActive[i] = false;
 			i++;
 		}
-		Debug.Log ("Time.timeScale = " + Time.timeScale.ToString ());
 	}
 	
 	void Update () {
 		keyboard_event ();
 		if (true == check_collider_win() && Application.loadedLevelName != "intro_start") {
-			Debug.Log("WIN WIN WIN");
 			Time.timeScale = 0.0f;
 			sphCollider.instance.reset_static_id();
 			this.isWin = true;
-			//loadNextLevel();
 		}
 	}
 
-	public void	setActive(int id){
-		this.tabIsActive [id] = true;
-		//Debug.Log("setActive id: " + id.ToString());
-	}
+	public void	setActive(int id){ this.tabIsActive [id] = true; }
 	
-	public void	setInactive(int id) {
-		this.tabIsActive [id] = false;
-		//Debug.Log("setInactive id: " + id.ToString());
-	}
+	public void	setInactive(int id) { this.tabIsActive [id] = false; }
 
 	private bool check_collider_win(){
 		bool isAllTrue = true;

@@ -9,7 +9,10 @@ enum Dir : int {
 	TRANSUP,
 	TRANSDOWN,
 	TRANSLEFT,
-	TRANSRIGHT
+	TRANSRIGHT,
+	ROTATE_X,
+	ROTATE_Y,
+	TRANSLATE_Y
 }
 
 public class moveMouse : MonoBehaviour {
@@ -17,6 +20,7 @@ public class moveMouse : MonoBehaviour {
 
 	private int 		objectNbr = 0;
 	private GameObject	lastSelectObject = null;
+	private int			movePermission;
 
 	void Start () {
 		this.itemObject = load_item_with_scene();
@@ -52,23 +56,28 @@ public class moveMouse : MonoBehaviour {
 
 	private void mouseEvent(GameObject toApply) {
 		if (Input.GetMouseButton (0)) {
-			if ((Input.GetKey (KeyCode.LeftControl) || Input.GetKey (KeyCode.RightControl))) { // ROTATE VERTICAL
+			if ((this.movePermission == (int)Dir.TRANSLATE_Y || this.movePermission == (int)Dir.ROTATE_Y)
+			    	&& ( Input.GetKey (KeyCode.LeftControl) || Input.GetKey (KeyCode.RightControl) )
+			    	) { // ROTATE VERTICAL
 				if (Input.GetAxis("Mouse Y") > 0){
 					do_Y_rotate(toApply, (int)Dir.ROTATEUP);
 				} else if (Input.GetAxis("Mouse Y") < 0){
 					do_Y_rotate(toApply, (int)Dir.ROTATEDOWN);
 				}
-			} else if ((Input.GetKey (KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))) { // TRANSLATE VERTICAL
+
+			} else if (this.movePermission == (int)Dir.TRANSLATE_Y
+					&& (Input.GetKey (KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+					) { // TRANSLATE VERTICAL
 				if (Input.GetAxis("Mouse Y") < 0){
 					do_VERT_translate(toApply, (int)Dir.TRANSUP);
 				} else if (Input.GetAxis("Mouse Y") > 0){
 					do_VERT_translate(toApply, (int)Dir.TRANSDOWN);
-				}/* else if (Input.GetAxis("Mouse X") < 0){
-					do_HORI_translate(toApply, (int)Dir.TRANSLEFT);
-				} else if (Input.GetAxis("Mouse X") > 0){
-					do_HORI_translate(toApply, (int)Dir.TRANSRIGHT);
-				}*/	
-			} else { // ROTATE HONRIZONTAL
+				}
+
+			} else if (this.movePermission == (int)Dir.ROTATE_Y
+					|| this.movePermission == (int)Dir.TRANSLATE_Y
+					|| this.movePermission == (int)Dir.ROTATE_X
+					) { // ROTATE HONRIZONTAL
 				if (Input.GetAxis("Mouse X") < 0){
 					do_X_rotate(toApply, (int)Dir.ROTATELEFT);
 				} else if (Input.GetAxis("Mouse X") > 0){
@@ -108,22 +117,23 @@ public class moveMouse : MonoBehaviour {
 		if (Application.loadedLevelName == "scene_item_teaPot"){
 			tabObject[0] = GameObject.Find ("tea_pot_tomove");
 			tabObject[1] = null;
-		} else if (Application.loadedLevelName == "scene_item4"){
-			tabObject[0] = GameObject.Find ("item_4");
-			tabObject[1] = null;
+			this.movePermission = (int)Dir.ROTATE_X;
 		} else if (Application.loadedLevelName == "scene_elephant"){
 			tabObject[0] = GameObject.Find ("elephant");
 			tabObject[1] = null;
+			this.movePermission = (int)Dir.ROTATE_Y;
 		} else if (Application.loadedLevelName == "scene_globe"){
 			tabObject[0] = GameObject.Find ("globe_base");
 			tabObject[1] = GameObject.Find ("globe-earth");
+			this.movePermission = (int)Dir.TRANSLATE_Y;
 		} else if (Application.loadedLevelName == "scene_bonus"){
 			tabObject[0] = GameObject.Find ("crocro_container");
 			tabObject[1] = null;
-		}
-		else if (Application.loadedLevelName == "scene_bonus1"){
+			this.movePermission = (int)Dir.ROTATE_Y;
+		} else if (Application.loadedLevelName == "scene_bonus1"){
 			tabObject[0] = GameObject.Find ("cat_container");
 			tabObject[1] = null;
+			this.movePermission = (int)Dir.ROTATE_X;
 		}
 		return tabObject;
 	}

@@ -3,9 +3,6 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class uiManager : MonoBehaviour {
-	private GameObject		buttonClassicModeObject;
-	private GameObject		buttonTestModeObject;
-	private GameObject		buttonBackIntroObject;
 	private GameObject		menuInterfaceEscapeObject;
 	private GameObject		panelLevelSelectObject;
 	private GameObject		winnerInterfaceObject;
@@ -17,9 +14,6 @@ public class uiManager : MonoBehaviour {
 	private bool			isSoluceDraw = false;
 	
 	void Start () {
-		this.buttonClassicModeObject = GameObject.Find ("button_classic_mode");
-		this.buttonTestModeObject = GameObject.Find ("button_test_mode");
-		this.buttonBackIntroObject = GameObject.Find ("button_back_to_intro");
 		this.menuInterfaceEscapeObject = GameObject.Find ("menuInterface_escape");
 		this.panelLevelSelectObject = GameObject.Find ("panel_level_select");
 		this.winnerInterfaceObject = GameObject.Find ("winnerInterface_group");
