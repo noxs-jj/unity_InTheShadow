@@ -91,6 +91,9 @@ public class gameManager : MonoBehaviour {
 			Application.LoadLevel ("scene_bonus");
 		} else if (Application.loadedLevelName == "scene_bonus"){
 			sphCollider.instance.reset_static_id();
+			Application.LoadLevel ("scene_bonus1");
+		} else if (Application.loadedLevelName == "scene_bonus1"){
+			sphCollider.instance.reset_static_id();
 			Application.LoadLevel ("intro_start");
 		}
 	}

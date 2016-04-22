@@ -117,6 +117,13 @@ public class moveMouse : MonoBehaviour {
 		} else if (Application.loadedLevelName == "scene_globe"){
 			tabObject[0] = GameObject.Find ("globe_base");
 			tabObject[1] = GameObject.Find ("globe-earth");
+		} else if (Application.loadedLevelName == "scene_bonus"){
+			tabObject[0] = GameObject.Find ("crocro_container");
+			tabObject[1] = null;
+		}
+		else if (Application.loadedLevelName == "scene_bonus1"){
+			tabObject[0] = GameObject.Find ("cat_container");
+			tabObject[1] = null;
 		}
 		return tabObject;
 	}
@@ -124,6 +131,8 @@ public class moveMouse : MonoBehaviour {
 	private int get_numberObject() {
 		if (Application.loadedLevelName == "scene_item_teaPot"
 			|| Application.loadedLevelName == "scene_item4"
+		    || Application.loadedLevelName == "scene_bonus"
+		    || Application.loadedLevelName == "scene_bonus1"
 			|| Application.loadedLevelName == "scene_elephant") {
 			return 1;
 		} else if (Application.loadedLevelName == "scene_globe") {

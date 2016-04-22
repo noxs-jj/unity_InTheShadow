@@ -46,16 +46,23 @@ public class uiManager : MonoBehaviour {
 		drawPause ();
 	}
 	
-	public void activateTestPanelSelect(){ 			this.panelLevelSelectObject.SetActive (true); }
-	public void desactivateTestPanelSelect(){ 		this.panelLevelSelectObject.SetActive (false); }
+	public void activateTestPanelSelect(){
+		sphCollider.instance.reset_static_id();
+		this.panelLevelSelectObject.SetActive (true);
+	}
+	public void desactivateTestPanelSelect(){
+		sphCollider.instance.reset_static_id();
+		this.panelLevelSelectObject.SetActive (false);
+	}
 	public void activateClassicPanelSelect(){ 		this.panelLevelSelectObject.SetActive (true); }
 	public void desactivateClassicPanelSelect(){ 	this.panelLevelSelectObject.SetActive (false); }
 
-	public void launchLevelTeaPot(){ 	Application.LoadLevel ("scene_item_teaPot"); }
-	public void launchLevelElephant(){ 	Application.LoadLevel ("scene_elephant"); }
-	public void launchLevelGlobe(){ 	Application.LoadLevel ("scene_globe"); }
-	public void launchLevelBonus(){ 	Application.LoadLevel ("scene_bonus"); }
-	public void launchIntroStart(){ 	Application.LoadLevel ("intro_start"); }
+	public void launchLevelTeaPot(){ 	loadLEveLResetStaticSphe ("scene_item_teaPot"); }
+	public void launchLevelElephant(){ 	loadLEveLResetStaticSphe ("scene_elephant"); }
+	public void launchLevelGlobe(){ 	loadLEveLResetStaticSphe ("scene_globe"); }
+	public void launchLevelBonus(){ 	loadLEveLResetStaticSphe ("scene_bonus"); }
+	public void launchLevelBonus1(){ 	loadLEveLResetStaticSphe ("scene_bonus1"); }
+	public void launchIntroStart(){ 	loadLEveLResetStaticSphe ("intro_start"); }
 
 	public void retry(){
 		sphCollider.instance.reset_static_id();
@@ -63,22 +70,17 @@ public class uiManager : MonoBehaviour {
 	}
 
 	public void loadNextLevel(){
-		if (Application.loadedLevelName == "intro_start"){
-			sphCollider.instance.reset_static_id();
-			Application.LoadLevel ("scene_item_teaPot");
-		} else if (Application.loadedLevelName == "scene_item_teaPot"){
-			sphCollider.instance.reset_static_id();
-			Application.LoadLevel ("scene_elephant");
-		} else if (Application.loadedLevelName == "scene_elephant"){
-			sphCollider.instance.reset_static_id();
-			Application.LoadLevel ("scene_globe");
-		} else if (Application.loadedLevelName == "scene_globe"){
-			sphCollider.instance.reset_static_id();
-			Application.LoadLevel ("scene_bonus");
-		} else if (Application.loadedLevelName == "scene_bonus"){
-			sphCollider.instance.reset_static_id();
-			Application.LoadLevel ("intro_start");
-		}
+		if (Application.loadedLevelName == "intro_start"){ 				loadLEveLResetStaticSphe ("scene_item_teaPot"); } 
+		else if (Application.loadedLevelName == "scene_item_teaPot"){	loadLEveLResetStaticSphe ("scene_elephant"); }
+		else if (Application.loadedLevelName == "scene_elephant"){ 		loadLEveLResetStaticSphe ("scene_globe"); }
+		else if (Application.loadedLevelName == "scene_globe"){ 		loadLEveLResetStaticSphe ("scene_bonus"); }
+		else if (Application.loadedLevelName == "scene_bonus"){ 		loadLEveLResetStaticSphe ("scene_bonus1"); }
+		else if (Application.loadedLevelName == "scene_bonus1"){ 		loadLEveLResetStaticSphe ("intro_start"); }
+	}
+
+	private void loadLEveLResetStaticSphe(string levelName){
+		sphCollider.instance.reset_static_id();
+		Application.LoadLevel (levelName);
 	}
 
 	private void drawPause(){
