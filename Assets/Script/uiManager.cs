@@ -47,6 +47,10 @@ public class uiManager : MonoBehaviour {
 	public void launchLevelGlobe(){ Application.LoadLevel ("scene_globe"); }
 	public void launchLevelBonus(){ Application.LoadLevel ("scene_bonus"); }
 	public void launchIntroStart(){ Application.LoadLevel ("intro_start"); }
+
+	public void clikButtonTest(){
+		Debug.Log ("Button CLICKED !");
+	}
 	
 	private void keyboard_event(){
 		if (Input.GetKeyDown (KeyCode.Escape)) {
