@@ -100,7 +100,7 @@ public class moveMouse : MonoBehaviour {
 	}
 
 	private void do_VERT_translate(GameObject toApply, int direction) {
-		float translate = (direction == (int)Dir.TRANSUP) ? -2.0f : 2.0f;
+		float translate = (direction == (int)Dir.TRANSUP) ? -8.0f : 8.0f;
 		toApply.transform.position += new Vector3 (0.0f, translate, 0.0f) * Time.deltaTime;
 	}
 
